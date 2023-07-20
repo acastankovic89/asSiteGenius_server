@@ -4,7 +4,8 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-
+import { LogInUserDto } from './dto/logIn-user.dto';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class UsersService {
@@ -23,8 +24,6 @@ export class UsersService {
           message: 'User already exists.',
         };
       } else {
-       
-
         const addUser = await this.userRepository.save(createUserDto);
         console.log('addUser', addUser);
         return {
@@ -35,6 +34,43 @@ export class UsersService {
       }
     } catch (error) {
       console.log('Error', error);
+    }
+  }
+
+  async logIn(LogInUserDto: LogInUserDto) {
+    console.log('LogInUserDto', LogInUserDto);
+    try {
+      const findUser = await this.userRepository.findOne({
+        where: { email: LogInUserDto.email },
+      });
+
+      if (!findUser) {
+        console.log('findUser', findUser);
+        return {
+          message: "User with this email doese't exist!",
+          status: 401,
+        };
+      } else {
+        console.log('findUser', findUser);
+        const isMatch = await bcrypt.compare(
+          LogInUserDto.password,
+          findUser.password,
+        );
+        if (!isMatch) {
+          return {
+            message: 'Wrong password',
+            status: 401,
+          };
+        } else {
+          return {
+            message: 'User successfully logged',
+            status: 200,
+            response: findUser,
+          };
+        }
+      }
+    } catch (error) {
+      if (error) throw error;
     }
   }
 
