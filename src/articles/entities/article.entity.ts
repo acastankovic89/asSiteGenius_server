@@ -47,5 +47,5 @@ export class Article {
   metaDescription: string;
 
   @ManyToOne(() => Category, (category) => category.article)
-  category: Category;
+  category: Category[];
 }

@@ -21,8 +21,8 @@ export class ArticlesController {
   }
 
   @Get()
-  findAll() {
-    return this.articlesService.findAll();
+  findAllArticles() {
+    return this.articlesService.findAllArticles();
   }
 
   @Get(':id')
@@ -36,7 +36,7 @@ export class ArticlesController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.articlesService.remove(+id);
+  removeArticle(@Param('id') id: string) {
+    return this.articlesService.removeArticle(+id);
   }
 }

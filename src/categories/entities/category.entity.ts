@@ -49,6 +49,6 @@ export class Category {
   @Column({ nullable: true })
   metaDescription: string;
 
-  @OneToMany(() => Article, (article) => article.category)
+  @ManyToMany(() => Article, (article) => article.category)
   article: Article[];
 }

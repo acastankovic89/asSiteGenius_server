@@ -30,6 +30,11 @@ export class CategoriesController {
     return categoryTree;
   }
 
+  @Get('getAllCategories')
+  getAllCategoriesForTAble() {
+    return this.categoriesService.findAllCategories();
+  }
+
   private buildCategoryTree(categories: Category[], parentId: number): any {
     const categoryTree = [];
 
@@ -64,6 +69,6 @@ export class CategoriesController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.categoriesService.remove(+id);
+    return this.categoriesService.removeCategory(+id);
   }
 }
