@@ -58,8 +58,27 @@ export class ArticlesService {
     }
   }
 
-  findAll() {
-    return `This action returns all articles`;
+  async findAllArticles() {
+    try {
+      const findArticles = await this.articleRepository.find({
+        relations: ['category'],
+      });
+      if (findArticles) {
+        return {
+          message: 'You have successfully retrieved all the articles.',
+          response: findArticles,
+          status: 200,
+        };
+      } else {
+        return {
+          message: 'Something went wrong.',
+          response: findArticles,
+          status: 401,
+        };
+      }
+    } catch (error) {
+      if (error) console.log('Error:', error);
+    }
   }
 
   findOne(id: number) {
@@ -70,7 +89,18 @@ export class ArticlesService {
     return `This action updates a #${id} article`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} article`;
+  async removeArticle(id: number) {
+    try {
+      const deleteArticle = await this.articleRepository.delete({ id: id });
+      console.log('deleteArticle', deleteArticle);
+      if (deleteArticle) {
+        return {
+          message: 'Article is deleted!',
+          response: deleteArticle,
+        };
+      }
+    } catch (error) {
+      if (error) console.log('Error', error);
+    }
   }
 }
