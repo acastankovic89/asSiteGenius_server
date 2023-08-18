@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
+import { find } from 'rxjs';
 
 @Injectable()
 export class CategoriesService {
@@ -49,12 +50,60 @@ export class CategoriesService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} category`;
+  async findOne(id: number) {
+    try {
+      const category = await this.categoryRepository.findOne({
+        where: {
+          id: id,
+        },
+      });
+      if (category) {
+        return {
+          message: 'You have successfully retrieved a category.',
+          response: category,
+          status: 200,
+        };
+      } else {
+        return {
+          message: 'Something went wrong.',
+          status: 401,
+        };
+      }
+    } catch (error) {
+      if (error) console.log('Error:', error);
+    }
   }
 
-  update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    return `This action updates a #${id} category`;
+  async update(id: number, updateCategoryDto: UpdateCategoryDto) {
+    try {
+      var findCategory = await this.categoryRepository.findOne({
+        where: {
+          id: id,
+        },
+      });
+      if (findCategory) {
+        findCategory = updateCategoryDto;
+        const updateCategory = await this.categoryRepository.save(findCategory);
+        if (updateCategory) {
+          return {
+            message: 'The category has been updated.',
+            response: findCategory,
+            status: 200,
+          };
+        } else {
+          return {
+            message: 'Something went wrong',
+            status: 401,
+          };
+        }
+      } else {
+        return {
+          message: 'Something went wrong.',
+        };
+      }
+    } catch (error) {
+      if (error) console.log('Error:', error);
+    }
   }
 
   async removeCategory(id: number) {

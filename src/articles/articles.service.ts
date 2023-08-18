@@ -81,12 +81,57 @@ export class ArticlesService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} article`;
+  async findOne(id: number) {
+    try {
+      const article = await this.articleRepository.findOne({
+        where: {
+          id: id,
+        },
+        relations: ['category'],
+      });
+      if (article) {
+        return {
+          message: 'Success! The article has been located.',
+          response: article,
+          status: 200,
+        };
+      } else {
+        return {
+          message: 'Something went wrong.',
+        };
+      }
+    } catch (error) {
+      if (error) console.log('Error:', error);
+    }
   }
 
-  update(id: number, updateArticleDto: UpdateArticleDto) {
-    return `This action updates a #${id} article`;
+  async update(id: number, updateArticleDto: UpdateArticleDto) {
+    console.log('updateArticleDto', updateArticleDto);
+    try {
+      var findArticle = await this.articleRepository.findOne({
+        where: {
+          id: updateArticleDto.id,
+        },
+      });
+      findArticle = updateArticleDto;
+      const updateArticle = await this.articleRepository.save(findArticle);
+      console.log('updateArticle', updateArticle);
+      if (updateArticle) {
+        return {
+          message: 'The article has been updated.',
+          response: updateArticle,
+          status: 200,
+        };
+      } else {
+        return {
+          message: 'Something went wrong.',
+          response: updateArticle,
+          status: 401,
+        };
+      }
+    } catch (error) {
+      if (error) console.log('Error:', error);
+    }
   }
 
   async removeArticle(id: number) {
