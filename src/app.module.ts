@@ -15,6 +15,8 @@ import { Comment } from './comments/entities/comment.entity';
 import { Role } from './roles/entities/role.entity';
 import { Menu } from './menus/entities/menu.entity';
 import { FileUploadModule } from './file-upload/file-upload.module';
+import { MenuItemsModule } from './menu-items/menu-items.module';
+import { MenuItem } from './menu-items/entities/menu-item.entity';
 
 @Module({
   imports: [
@@ -25,7 +27,7 @@ import { FileUploadModule } from './file-upload/file-upload.module';
       username: 'postgres',
       password: 'admin',
       database: 'asSiteGenius_db',
-      entities: [User, Article, Category, Comment, Role, Menu],
+      entities: [User, Article, Category, Comment, Role, Menu, MenuItem],
       synchronize: true,
     }),
     ArticlesModule,
@@ -35,6 +37,7 @@ import { FileUploadModule } from './file-upload/file-upload.module';
     RolesModule,
     CommentsModule,
     FileUploadModule,
+    MenuItemsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

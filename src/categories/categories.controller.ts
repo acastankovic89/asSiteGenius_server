@@ -21,6 +21,11 @@ export class CategoriesController {
     return this.categoriesService.createCategory(createCategoryDto);
   }
 
+  @Get('getAllCategories')
+  getAllCategoriesForTAble() {
+    return this.categoriesService.findAllCategories();
+  }
+
   @Get()
   async findAllCategories(): Promise<any> {
     const categories = await this.categoriesService.findAllCategories();
@@ -29,21 +34,19 @@ export class CategoriesController {
     console.log('categoryTree', JSON.stringify(categoryTree, null, 2));
     return categoryTree;
   }
-
-  @Get('getAllCategories')
-  getAllCategoriesForTAble() {
-    return this.categoriesService.findAllCategories();
-  }
-
+  
   private buildCategoryTree(categories: Category[], parentId: number): any {
     const categoryTree = [];
+    console.log('parentId', parentId);
 
     const filteredCategories = categories.filter(
       (category) => category.parentId === parentId,
     );
+    console.log('filteredCategories', filteredCategories);
 
     for (const category of filteredCategories) {
       const children = this.buildCategoryTree(categories, category.id);
+      console.log('children', children);
       if (children.length > 0) {
         category.children = children;
       }
