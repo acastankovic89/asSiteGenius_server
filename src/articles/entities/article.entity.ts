@@ -46,6 +46,9 @@ export class Article {
   @Column({ nullable: true })
   metaDescription: string;
 
+  @Column({ nullable: true })
+  metaTitle: string;
+
   @ManyToOne(() => Category, (category) => category.article)
   category: Category[];
 }

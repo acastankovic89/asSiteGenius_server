@@ -1,6 +1,7 @@
 interface Role {
   admin: string;
   editor: string;
+  superAdmin: string;
 }
 
 export class CreateUserDto {
