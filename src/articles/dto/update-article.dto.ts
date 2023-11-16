@@ -14,5 +14,6 @@ export class UpdateArticleDto extends PartialType(CreateArticleDto) {
   publishDate: string;
   categoryId: number;
   metaDescription: string;
+  metaTitle: string;
   category: [];
 }

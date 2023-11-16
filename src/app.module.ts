@@ -17,6 +17,14 @@ import { Menu } from './menus/entities/menu.entity';
 import { FileUploadModule } from './file-upload/file-upload.module';
 import { MenuItemsModule } from './menu-items/menu-items.module';
 import { MenuItem } from './menu-items/entities/menu-item.entity';
+import { SliderModule } from './slider/slider.module';
+import { Slider } from './slider/entities/slider.entity';
+import { SliderItemsModule } from './slider-items/slider-items.module';
+import { SliderItem } from './slider-items/entities/slider-item.entity';
+import { GalleryModule } from './gallery/gallery.module';
+import { Gallery } from './gallery/entities/gallery.entity';
+import { GalleryItemsModule } from './gallery-items/gallery-items.module';
+import { GalleryItem } from './gallery-items/entities/gallery-item.entity';
 
 @Module({
   imports: [
@@ -27,7 +35,19 @@ import { MenuItem } from './menu-items/entities/menu-item.entity';
       username: 'postgres',
       password: 'admin',
       database: 'asSiteGenius_db',
-      entities: [User, Article, Category, Comment, Role, Menu, MenuItem],
+      entities: [
+        User,
+        Article,
+        Category,
+        Comment,
+        Role,
+        Menu,
+        MenuItem,
+        Slider,
+        SliderItem,
+        Gallery,
+        GalleryItem,
+      ],
       synchronize: true,
     }),
     ArticlesModule,
@@ -38,6 +58,10 @@ import { MenuItem } from './menu-items/entities/menu-item.entity';
     CommentsModule,
     FileUploadModule,
     MenuItemsModule,
+    SliderModule,
+    SliderItemsModule,
+    GalleryModule,
+    GalleryItemsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
