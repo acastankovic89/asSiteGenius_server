@@ -25,17 +25,19 @@ export class GalleryItemsController {
     return this.galleryItemsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.galleryItemsService.findOne(+id);
+  @Get(':galleryId')
+  findAllForSingleGallery(@Param('galleryId') id: number) {
+    return this.galleryItemsService.findAllForSingleGallery(id);
   }
 
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateGalleryItemDto: UpdateGalleryItemDto,
-  ) {
-    return this.galleryItemsService.update(+id, updateGalleryItemDto);
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.galleryItemsService.findOne(+id);
+  // }
+
+  @Patch()
+  update(@Body() body) {
+    return this.galleryItemsService.update(body);
   }
 
   @Delete('/:id/:imageName')
