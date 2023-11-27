@@ -68,9 +68,11 @@ export class FileUploadService {
       }
     });
     file.forEach((element) => {
+      console.log('Writing file with filename:', element.originalname);
       fs.writeFile(
         directoryPath + element.originalname,
         element.buffer,
+        'binary',
         (err) => {
           if (err) {
             console.log('Error saving image:', err);
@@ -90,9 +92,15 @@ export class FileUploadService {
     const directory = `uploads/gallery/${id}`;
     try {
       const files = await readdir(directory);
+      console.log('files', files);
+      const transformFiles = files.map((fileName) => ({
+        itemImageName: fileName,
+        caption: '',
+        galleryId: id,
+      }));
       return {
         message: 'Successfully retrieved all images',
-        response: files,
+        response: transformFiles,
         status: 200,
       };
     } catch (error) {
